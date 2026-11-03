@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <meta name="description" content="وصل - اطلب من محلات العريش ويوصلك لحد عندك">
+  <title>وصل WASL | توصيل العريش</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="وصل الصفحة الرئيسية">
+      <span class="brand-mark">و</span>
+      <span><b>وَصْل</b><small>WASL</small></span>
+    </a>
+    <button class="location" id="locationBtn" type="button">
+      <span class="pin">⌖</span>
+      <span><small>التوصيل إلى</small><b id="locationText">العريش، عاطف السادات</b></span>
+      <span class="chevron">⌄</span>
+    </button>
+    <button class="icon-btn" aria-label="الإشعارات" type="button">♧</button>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <p class="eyebrow">كل اللي محتاجه… أقرب مما تتخيل</p>
+      <h1>طلبك علينا،<br><span>ويوصلك لحد عندك.</span></h1>
+      <p class="muted">مطاعم، صيدليات، ومحلات العريش في مكان واحد.</p>
+      <div class="search">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="بتدور على إيه النهارده؟" aria-label="ابحث عن محل أو منتج">
+        <kbd>بحث</kbd>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <div><p class="eyebrow">اختار اللي تحتاجه</p><h2>الأقسام</h2></div>
+        <a href="#shops">عرض الكل</a>
+      </div>
+      <div class="categories">
+        <button class="category active" data-category="الكل"><span class="category-icon">✦</span><b>الكل</b></button>
+        <button class="category" data-category="مطاعم"><span class="category-icon">♨</span><b>مطاعم</b></button>
+        <button class="category" data-category="صيدليات"><span class="category-icon">✚</span><b>صيدليات</b></button>
+        <button class="category" data-category="سوبر ماركت"><span class="category-icon">▤</span><b>سوبر ماركت</b></button>
+        <button class="category" data-category="محلات"><span class="category-icon">▣</span><b>محلات</b></button>
+      </div>
+    </section>
+
+    <section class="promo">
+      <div>
+        <span class="promo-tag">قريبًا في العريش</span>
+        <h2>عروض المحلات<br>في مكان واحد</h2>
+        <p>تابع الجديد والعروض أول بأول.</p>
+      </div>
+      <div class="promo-art" aria-hidden="true"><span>و</span><i>✦</i></div>
+    </section>
+
+    <section class="section" id="shops">
+      <div class="section-heading">
+        <div><p class="eyebrow">اختيارات من منطقتك</p><h2>محلات مميزة</h2></div>
+        <span class="muted tiny">نموذج تجريبي</span>
+      </div>
+      <div class="shop-list" id="shopList">
+        <article class="shop-card" data-category="مطاعم" data-name="مطعم تجريبي">
+          <div class="shop-visual food"><span>🍔</span><em>مطاعم</em></div>
+          <div class="shop-info"><div><h3>مطعم تجريبي</h3><p>وجبات وسندوتشات</p></div><span class="status">قريبًا</span></div>
+          <div class="shop-meta"><span>★ جديد على وصل</span><span>وقت التوصيل يحدد لاحقًا</span></div>
+        </article>
+        <article class="shop-card" data-category="صيدليات" data-name="صيدلية تجريبية">
+          <div class="shop-visual pharmacy"><span>✚</span><em>صيدليات</em></div>
+          <div class="shop-info"><div><h3>صيدلية تجريبية</h3><p>منتجات صيدلية مرخصة</p></div><span class="status">قريبًا</span></div>
+          <div class="shop-meta"><span>★ جديد على وصل</span><span>التوفر حسب الصيدلية</span></div>
+        </article>
+        <article class="shop-card" data-category="سوبر ماركت" data-name="ماركت تجريبي">
+          <div class="shop-visual market"><span>▤</span><em>سوبر ماركت</em></div>
+          <div class="shop-info"><div><h3>ماركت تجريبي</h3><p>احتياجات البيت اليومية</p></div><span class="status">قريبًا</span></div>
+          <div class="shop-meta"><span>★ جديد على وصل</span><span>الأسعار يضيفها التاجر</span></div>
+        </article>
+      </div>
+      <p class="empty hidden" id="emptyState">مفيش نتائج مطابقة. جرّب كلمة تانية.</p>
+    </section>
+
+    <section class="rider-cta">
+      <div><p class="eyebrow">معاك سكوتر؟</p><h2>انضم لمندوبي وصل</h2><p>استقبل طلبات قريبة منك واكسب مع كل توصيل.</p></div>
+      <a href="mailto:hello@wasl.example?subject=التسجيل%20كمندوب%20وصل">سجّل اهتمامك <span>←</span></a>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+    <a class="nav-item selected" href="#"><span>⌂</span><small>الرئيسية</small></a>
+    <a class="nav-item" href="#shops"><span>▦</span><small>المحلات</small></a>
+    <a class="nav-item" href="mailto:hello@wasl.example"><span>♡</span><small>المفضلة</small></a>
+    <a class="nav-item" href="mailto:hello@wasl.example"><span>♙</span><small>حسابي</small></a>
+  </nav>
+  <footer><b>وَصْل WASL</b><span>نسخة تصميم أولية — ليست خدمة طلبات فعلية بعد</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
