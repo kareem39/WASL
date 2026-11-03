@@ -1,0 +1,857 @@
+
+
+<!doctype html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#111111">
+
+  <meta name="description" content="وصل - اطلب من محلات العريش ويوصلك لحد عندك">
+
+  <title>وصل WASL | توصيل العريش</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+
+    .wasl-overlay {
+
+      display:none;
+
+      position:fixed;
+
+      inset:0;
+
+      z-index:1000;
+
+      background:rgba(0,0,0,.75);
+
+      align-items:center;
+
+      justify-content:center;
+
+      padding:18px;
+
+    }
+
+    .wasl-overlay.show {display:flex}
+
+    .wasl-modal {
+
+      width:100%;
+
+      max-width:420px;
+
+      max-height:90vh;
+
+      overflow-y:auto;
+
+      background:#171717;
+
+      color:white;
+
+      border:1px solid #333;
+
+      border-radius:23px;
+
+      padding:23px;
+
+      box-shadow:0 20px 70px #0008;
+
+    }
+
+    .wasl-modal-head {
+
+      display:flex;
+
+      justify-content:space-between;
+
+      align-items:center;
+
+      margin-bottom:20px;
+
+    }
+
+    .wasl-modal-logo {
+
+      display:flex;
+
+      align-items:center;
+
+      gap:10px;
+
+      font-size:20px;
+
+      font-weight:900;
+
+    }
+
+    .wasl-modal-logo span {
+
+      background:#ff6b1a;
+
+      padding:7px 12px;
+
+      border-radius:10px;
+
+    }
+
+    .wasl-close {
+
+      border:0;
+
+      background:#292929;
+
+      color:white;
+
+      width:36px;
+
+      height:36px;
+
+      border-radius:10px;
+
+      font-size:22px;
+
+    }
+
+    .wasl-modal h2 {
+
+      font-size:22px;
+
+      margin:0 0 7px;
+
+    }
+
+    .wasl-modal .sub {
+
+      color:#aaa;
+
+      font-size:12px;
+
+      margin:0 0 20px;
+
+    }
+
+    .wasl-field {margin-bottom:14px}
+
+    .wasl-field label {
+
+      display:block;
+
+      font-size:12px;
+
+      margin-bottom:7px;
+
+      color:#ddd;
+
+    }
+
+    .wasl-field input,
+
+    .wasl-field select {
+
+      width:100%;
+
+      padding:13px;
+
+      border:1px solid #3b3b3b;
+
+      border-radius:11px;
+
+      background:#242424;
+
+      color:white;
+
+      outline:none;
+
+      font-family:inherit;
+
+      font-size:13px;
+
+    }
+
+    .wasl-field input:focus,
+
+    .wasl-field select:focus {border-color:#ff6b1a}
+
+    .wasl-primary {
+
+      width:100%;
+
+      border:0;
+
+      background:#ff6b1a;
+
+      color:white;
+
+      padding:13px;
+
+      border-radius:11px;
+
+      font-family:inherit;
+
+      font-weight:900;
+
+      font-size:14px;
+
+      margin-top:7px;
+
+    }
+
+    .wasl-secondary {
+
+      width:100%;
+
+      border:1px solid #444;
+
+      background:#242424;
+
+      color:white;
+
+      padding:12px;
+
+      border-radius:11px;
+
+      font-family:inherit;
+
+      margin-top:10px;
+
+    }
+
+    .wasl-switch {
+
+      text-align:center;
+
+      color:#bbb;
+
+      font-size:12px;
+
+      margin-top:17px;
+
+    }
+
+    .wasl-switch button {
+
+      border:0;
+
+      background:none;
+
+      color:#ff6b1a;
+
+      font-family:inherit;
+
+      font-weight:900;
+
+    }
+
+    .wasl-message {
+
+      display:none;
+
+      padding:11px;
+
+      border-radius:10px;
+
+      background:#292929;
+
+      border:1px solid #444;
+
+      color:#fff;
+
+      font-size:12px;
+
+      line-height:1.8;
+
+      margin-bottom:14px;
+
+    }
+
+    .wasl-message.show {display:block}
+
+    .wasl-message.error {border-color:#b94b4b;color:#ffb0b0}
+
+    .wasl-account-actions {
+
+      display:grid;
+
+      gap:10px;
+
+    }
+
+    .wasl-action {
+
+      text-align:right;
+
+      border:1px solid #393939;
+
+      background:#222;
+
+      color:white;
+
+      padding:14px;
+
+      border-radius:12px;
+
+      font-family:inherit;
+
+      font-size:13px;
+
+    }
+
+    .wasl-action b {
+
+      display:block;
+
+      color:#ff6b1a;
+
+      margin-bottom:4px;
+
+    }
+
+    .wasl-status {
+
+      font-size:12px;
+
+      color:#ddd;
+
+      background:#242424;
+
+      border-radius:10px;
+
+      padding:12px;
+
+      margin-bottom:12px;
+
+      line-height:1.8;
+
+    }
+
+    .wasl-hidden {display:none!important}
+
+    body.wasl-locked {overflow:hidden}
+
+  </style>
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <a class="brand" href="#" aria-label="وصل الصفحة الرئيسية">
+
+    <span class="brand-mark">و</span>
+
+    <span><b>وَصْل</b><small>WASL</small></span>
+
+  </a>
+
+  <button class="location" id="locationBtn" type="button">
+
+    <span class="pin">⌖</span>
+
+    <span>
+
+      <small>التوصيل إلى</small>
+
+      <b id="locationText">العريش، عاطف السادات</b>
+
+    </span>
+
+    <span class="chevron">⌄</span>
+
+  </button>
+
+  <button class="icon-btn" aria-label="الإشعارات" type="button">♧</button>
+
+</header>
+
+<main>
+
+  <section class="welcome">
+
+    <p class="eyebrow">كل اللي محتاجه… أقرب مما تتخيل</p>
+
+    <h1>طلبك علينا،<br><span>ويوصلك لحد عندك.</span></h1>
+
+    <p class="muted">مطاعم، صيدليات، ومحلات العريش في مكان واحد.</p>
+
+    <div class="search">
+
+      <span>⌕</span>
+
+      <input id="searchInput" type="search"
+
+        placeholder="بتدور على إيه النهارده؟"
+
+        aria-label="ابحث عن محل أو منتج">
+
+      <kbd>بحث</kbd>
+
+    </div>
+
+  </section>
+
+  <section class="section">
+
+    <div class="section-heading">
+
+      <div>
+
+        <p class="eyebrow">اختار اللي تحتاجه</p>
+
+        <h2>الأقسام</h2>
+
+      </div>
+
+      <a href="#shops">عرض الكل</a>
+
+    </div>
+
+    <div class="categories">
+
+      <button class="category active" data-category="الكل">
+
+        <span class="category-icon">✦</span><b>الكل</b>
+
+      </button>
+
+      <button class="category" data-category="مطاعم">
+
+        <span class="category-icon">♨</span><b>مطاعم</b>
+
+      </button>
+
+      <button class="category" data-category="صيدليات">
+
+        <span class="category-icon">✚</span><b>صيدليات</b>
+
+      </button>
+
+      <button class="category" data-category="سوبر ماركت">
+
+        <span class="category-icon">▤</span><b>سوبر ماركت</b>
+
+      </button>
+
+      <button class="category" data-category="محلات">
+
+        <span class="category-icon">▣</span><b>محلات</b>
+
+      </button>
+
+    </div>
+
+  </section>
+
+  <section class="promo">
+
+    <div>
+
+      <span class="promo-tag">قريبًا في العريش</span>
+
+      <h2>عروض المحلات<br>في مكان واحد</h2>
+
+      <p>تابع الجديد والعروض أول بأول.</p>
+
+    </div>
+
+    <div class="promo-art" aria-hidden="true">
+
+      <span>و</span><i>✦</i>
+
+    </div>
+
+  </section>
+
+  <section class="section" id="shops">
+
+    <div class="section-heading">
+
+      <div>
+
+        <p class="eyebrow">اختيارات من منطقتك</p>
+
+        <h2>محلات مميزة</h2>
+
+      </div>
+
+      <span class="muted tiny">نموذج تجريبي</span>
+
+    </div>
+
+    <div class="shop-list" id="shopList">
+
+      <article class="shop-card" data-category="مطاعم" data-name="مطعم تجريبي">
+
+        <div class="shop-visual food">
+
+          <span>🍔</span><em>مطاعم</em>
+
+        </div>
+
+        <div class="shop-info">
+
+          <div><h3>مطعم تجريبي</h3><p>وجبات وسندوتشات</p></div>
+
+          <span class="status">قريبًا</span>
+
+        </div>
+
+        <div class="shop-meta">
+
+          <span>★ جديد على وصل</span>
+
+          <span>وقت التوصيل يحدد لاحقًا</span>
+
+        </div>
+
+      </article>
+
+      <article class="shop-card" data-category="صيدليات" data-name="صيدلية تجريبية">
+
+        <div class="shop-visual pharmacy">
+
+          <span>✚</span><em>صيدليات</em>
+
+        </div>
+
+        <div class="shop-info">
+
+          <div><h3>صيدلية تجريبية</h3><p>منتجات صيدلية مرخصة</p></div>
+
+          <span class="status">قريبًا</span>
+
+        </div>
+
+        <div class="shop-meta">
+
+          <span>★ جديد على وصل</span>
+
+          <span>التوفر حسب الصيدلية</span>
+
+        </div>
+
+      </article>
+
+      <article class="shop-card" data-category="سوبر ماركت" data-name="ماركت تجريبي">
+
+        <div class="shop-visual market">
+
+          <span>▤</span><em>سوبر ماركت</em>
+
+        </div>
+
+        <div class="shop-info">
+
+          <div><h3>ماركت تجريبي</h3><p>احتياجات البيت اليومية</p></div>
+
+          <span class="status">قريبًا</span>
+
+        </div>
+
+        <div class="shop-meta">
+
+          <span>★ جديد على وصل</span>
+
+          <span>الأسعار يضيفها التاجر</span>
+
+        </div>
+
+      </article>
+
+    </div>
+
+    <p class="empty hidden" id="emptyState">
+
+      مفيش نتائج مطابقة. جرّب كلمة تانية.
+
+    </p>
+
+  </section>
+
+  <section class="rider-cta">
+
+    <div>
+
+      <p class="eyebrow">معاك سكوتر؟</p>
+
+      <h2>انضم لمندوبي وصل</h2>
+
+      <p>استقبل طلبات قريبة منك واكسب مع كل توصيل.</p>
+
+    </div>
+
+    <a href="#account" id="riderBtn">سجّل اهتمامك <span>←</span></a>
+
+  </section>
+
+</main>
+
+<nav class="bottom-nav" aria-label="التنقل الرئيسي">
+
+  <a class="nav-item selected" href="#"><span>⌂</span><small>الرئيسية</small></a>
+
+  <a class="nav-item" href="#shops"><span>▦</span><small>المحلات</small></a>
+
+  <a class="nav-item" href="#favorites" id="favoritesBtn"><span>♡</span><small>المفضلة</small></a>
+
+  <a class="nav-item" href="#account" id="accountBtn"><span>♙</span><small>حسابي</small></a>
+
+</nav>
+
+<footer>
+
+  <b>وَصْل WASL</b>
+
+  <span>نسخة أولية — الطلبات والتوصيل الفعلي قيد التطوير</span>
+
+</footer>
+
+<!-- نافذة الحساب -->
+
+<div class="wasl-overlay" id="accountOverlay">
+
+  <div class="wasl-modal">
+
+    <div class="wasl-modal-head">
+
+      <div class="wasl-modal-logo">
+
+        <span>و</span> وَصْل WASL
+
+      </div>
+
+      <button class="wasl-close" id="closeAccount" type="button">×</button>
+
+    </div>
+
+    <div class="wasl-message" id="accountMessage"></div>
+
+    <!-- تسجيل الدخول -->
+
+    <section id="loginPanel">
+
+      <h2>أهلاً بيك في وَصْل</h2>
+
+      <p class="sub">سجل دخولك علشان تستخدم حسابك.</p>
+
+      <form id="loginForm">
+
+        <div class="wasl-field">
+
+          <label for="loginEmail">البريد الإلكتروني</label>
+
+          <input id="loginEmail" type="email" required
+
+            placeholder="example@email.com">
+
+        </div>
+
+        <div class="wasl-field">
+
+          <label for="loginPassword">كلمة المرور</label>
+
+          <input id="loginPassword" type="password"
+
+            required minlength="6" placeholder="كلمة المرور">
+
+        </div>
+
+        <button class="wasl-primary" type="submit">تسجيل الدخول</button>
+
+      </form>
+
+      <p class="wasl-switch">
+
+        معندكش حساب؟
+
+        <button type="button" id="showSignup">إنشاء حساب جديد</button>
+
+      </p>
+
+    </section>
+
+    <!-- إنشاء حساب -->
+
+    <section id="signupPanel" class="wasl-hidden">
+
+      <h2>حساب جديد</h2>
+
+      <p class="sub">أنشئ حسابك على وَصْل بسهولة.</p>
+
+      <form id="signupForm">
+
+        <div class="wasl-field">
+
+          <label for="signupName">الاسم بالكامل</label>
+
+          <input id="signupName" type="text" required
+
+            placeholder="اكتب اسمك">
+
+        </div>
+
+        <div class="wasl-field">
+
+          <label for="signupPhone">رقم الهاتف</label>
+
+          <input id="signupPhone" type="tel" required
+
+            placeholder="01xxxxxxxxx">
+
+        </div>
+
+        <div class="wasl-field">
+
+          <label for="signupEmail">البريد الإلكتروني</label>
+
+          <input id="signupEmail" type="email" required
+
+            placeholder="example@email.com">
+
+        </div>
+
+        <div class="wasl-field">
+
+          <label for="signupPassword">كلمة المرور</label>
+
+          <input id="signupPassword" type="password"
+
+            required minlength="6" placeholder="6 أحرف على الأقل">
+
+        </div>
+
+        <button class="wasl-primary" type="submit">إنشاء الحساب</button>
+
+      </form>
+
+      <p class="wasl-switch">
+
+        عندك حساب؟
+
+        <button type="button" id="showLogin">تسجيل الدخول</button>
+
+      </p>
+
+    </section>
+
+    <!-- الحساب بعد تسجيل الدخول -->
+
+    <section id="profilePanel" class="wasl-hidden">
+
+      <h2>حسابي</h2>
+
+      <p class="sub" id="profileEmail"></p>
+
+      <div class="wasl-status" id="profileStatus">
+
+        حسابك مفعل كعميل.
+
+      </div>
+
+      <div class="wasl-account-actions">
+
+        <button class="wasl-action" id="customerAction" type="button">
+
+          <b>حساب عميل</b>
+
+          تصفح خدمات وَصْل
+
+        </button>
+
+        <button class="wasl-action" id="storeAction" type="button">
+
+          <b>انضم كتاجر</b>
+
+          قدم طلب لإضافة محلك إلى وَصْل
+
+        </button>
+
+        <button class="wasl-action" id="riderAction" type="button">
+
+          <b>انضم كمندوب</b>
+
+          قدم طلب للعمل مع وَصْل
+
+        </button>
+
+        <button class="wasl-secondary" id="logoutBtn" type="button">
+
+          تسجيل الخروج
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+<!-- نافذة طلب الانضمام -->
+
+<div class="wasl-overlay" id="joinOverlay">
+
+  <div class="wasl-modal">
+
+    <div class="wasl-modal-head">
+
+      <div class="wasl-modal-logo">
+
+        <span>و</span> طلب انضمام
+
+      </div>
+
+      <button class="wasl-close" id="closeJoin" type="button">×</button>
+
+    </div>
+
+    <div class="wasl-message" id="joinMessage"></div>
+
+    <h2 id="joinTitle">طلب انضمام</h2>
+
+    <p class="sub">املأ بياناتك وسيتم مراجعة طلبك من الإدارة.</p>
+
+    <form id="joinForm">
+
+      <div class="wasl-field">
+
+        <label for="joinName">الاسم بالكامل</label>
+
+        <input id="joinName" type="text" required>
+
+      </div>
+
+      <div class="wasl-field">
+
+        <label for="joinPhone">رقم الهاتف</label>
+
+        <input id="joinPhone" type="tel" required>
+
+      </div>
+
+      <button class="wasl-primary" type="submit">إرسال طلب الانضمام</button>
+
+      <button class="wasl-secondary" id="cancelJoin" type="button">رجوع</button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="app.js?v=4"></script>
+
+</body>
+
+</html>
